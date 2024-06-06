@@ -1,0 +1,131 @@
+extends ./layout/master
+
+block head
+  title Gerenciar Construções
+  link(rel="stylesheet", href="./styles/construction.css")
+  script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+  script(src="https://unpkg.com/vanilla-masker@1.1.1/lib/vanilla-masker.js")
+
+block content
+  .row
+    .col-lg-16.grid-margin.stretch-card
+      .card
+        .card-body
+          h4.card-title Construções
+          p.card-description
+            | Aqui você pode ver as construções
+          if canEdit === true 
+            button.btn.btn-primary.btn-lg.btn-block( onclick="openModal()") Adicionar
+
+          .table-responsive
+            table.table(id="table")
+              thead
+                tr
+                  th ID
+                  th Nome da obra
+                  th Data da criação
+                  th Data de modificação
+                  th Data de inicio
+                  th Data para término
+                  th Data da finalização
+                  th ID da companhia
+                  th Nome da companhia
+                  th Status
+                  th Veja completo
+                  if canEdit === true
+                    th Editar
+                    th Excluir
+              tbody
+                each construction in constructions
+                  tr
+                    td= construction.id
+                    td= construction.name
+                    td= construction.createdAt.toLocaleString('pt-Br').split(',')[0]
+                    td= construction.updatedAt ? construction.updatedAt.toLocaleString('pt-Br').split(',')[0] : ''
+                    td= construction.startDate ? construction.startDate.toLocaleString('pt-Br').split(',')[0] : ''
+                    td= construction.endDate ? construction.endDate.toLocaleString('pt-Br').split(',')[0] : ''
+                    td= construction.finishedAt ? construction.finishedAt.toLocaleString('pt-Br').split(',')[0] : ''
+                    td= construction.companyId
+                    td= construction.company.name
+                    td
+                      if construction.status === 'active' 
+                        label.badge.badge-danger Ativa
+                      else if construction.status === 'suspended' 
+                        label.badge.badge-danger Suspensa
+                      else if construction.status === 'canceled' 
+                        label.badge.badge-danger Cancelada
+                      else
+                        label.badge.badge-info Concluída
+                    td
+                      a.btn.btn-outline-secondary.btn-rounded.btn-icon(href=`/construcoes/${construction.id}` target="_blank")
+                        i.ti-stats-up.text-success
+                    if canEdit === true
+                      td
+                        if construction.status !== 'finished'
+                          button.btn.btn-warning.btn-rounded.btn-fw(onclick=`openModal(${JSON.stringify(construction)})` data-id=construction.id ) Editar
+                      td
+                        button.btn.btn-danger.btn-rounded.btn-fw(onclick=`openModalDelete({ id: ${construction.id}, name: '${construction.name}'})` data-id=construction.id) Excluir
+
+    #editModal.modal
+      .modal-content
+        span.closeModal &times;
+        h4.card-title Construção
+        form(id="editUserForm")
+          input(type="hidden", id="id", name="id")
+          input(type="hidden", id="createdAt", name="createdAt")
+
+          .form-group
+            label(for="nameConstruction") Nome da obra:
+            input.form-control(type="text", id="nameConstruction", name="nameConstruction", required)
+
+          .form-group
+            label(for="startDate") Data de inicio:
+            input.form-control(type="Date", id="startDate", placeholder="dd/mm/yyyy" name="startDate", required)
+
+          .form-group
+            label(for="endDate") Nome previsto para fim:
+            input.form-control(type="Date", id="endDate", placeholder="dd/mm/yyyy" name="endDate", required)
+
+          .form-group
+            label(for="status") Status:
+            select.form-control(id="statusSelect")
+              option(value=0)
+              option(value='active') Ativa
+              option(value='suspended') Suspensa
+              option(value='canceled') Cancelada
+
+          .form-group
+            label(for="contactResponsiblePerson") Companhia:
+            select.form-control(id="companySelect")
+              option(value=0)
+              for company in companies
+                option(value=company.id)= company.nameCompany
+
+          .form-group
+            button.btn.btn-primary.me-2(type="button" onclick='requestModal()') Salvar
+            button.btn.btn-light(onclick='closeModal()') Cancelar
+            label(id="errorMessage", style="display: none; color: red;")
+
+    #deleteModal.modal
+      .modal-content
+        span.closeModal &times;
+        h4.card-title Confirmar Exclusão
+        h4.card-title Tem certeza de que deseja excluir essa construção?
+          .form-group
+              input.form-control(type="text", id="idDelete", name="idDelete", readonly)
+          .form-group
+              input.form-control(type="text", id="nameDelete", name="nameDelete", readonly)
+
+
+          .form-group
+            button.btn.btn-danger.btn-rounded.btn-fw.deleteBtn(onclick='deleteModalRequest()') Excluir
+            button.btn.btn-light(onclick='closeModalDelete()') Cancelar
+            label(id="errorMessageDelete", style="display: none; color: red;")
+
+    #informationModal.modal
+      .modal-content  
+        label(id="message", style="display: none; color: red;")
+        label(id="messageP", style="display: none; color: green;")
+        button.btn.btn-light(onclick="reload()") Fechar
+
+    script(src="./javascript/construction.js")

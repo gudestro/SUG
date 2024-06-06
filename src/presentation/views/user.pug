@@ -1,0 +1,144 @@
+extends ./layout/master
+
+block head
+  title Gerenciar Colaboradores
+  link(rel="stylesheet", href="./styles/user.css")
+  script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+  script(src="https://unpkg.com/vanilla-masker@1.1.1/lib/vanilla-masker.js")
+
+
+block content
+  .row
+    .col-lg-16.grid-margin.stretch-card
+      .card
+        .card-body
+          h4.card-title Colaboradores
+          p.card-description
+            | Aqui você pode gerenciar os colaboradores 
+          button.btn.btn-primary.btn-lg.btn-block(class="addUser") Adicionar
+
+          .table-responsive
+            table.table(id="table")
+              thead
+                tr
+                  th ID
+                  th CPF
+                  th Email
+                  th Nome 
+                  th Data da criação
+                  th Admin
+                  th Contato
+                  th Cidade
+                  th CEP
+                  th Rua
+                  th Número
+                  th Bairro
+                  th Cargo
+                  th Nível de acesso
+                  th Editar
+                  th Excluir
+              tbody
+                for userTable in users
+                  tr
+                    td= userTable.id
+                    td= userTable.cpf
+                    td= userTable.email
+                    td= userTable.name
+                    td= userTable.createdAt.toLocaleString('pt-Br').split(',')[0]
+                    td
+                      label.badge.badge-danger= userTable.admin
+                    td= userTable.phone
+                    td= userTable.city
+                    td= userTable.zipCode
+                    td= userTable.road
+                    td= userTable.numberHouse
+                    td= userTable.neighborhood
+                    td= userTable.office
+                    td= userTable.categoryRules
+                    td
+                      button.btn.btn-warning.btn-rounded.btn-fw(class="editBtn" data-id=userTable.id ) Editar
+                    td  
+                      button.btn.btn-danger.btn-rounded.btn-fw(onclick=`openModalDelete({ id: ${userTable.id}, name: '${userTable.name}'})` data-id=userTable.id) Excluir
+
+    // Modal para edição de usuário
+    #editModal.modal
+      .modal-content
+        span.closeModal &times;
+        h4.card-title Colaborador
+        form.forms-sample(id="editUserForm")
+          input(type="hidden", id="userId", name="userId")
+          input(id="createdAt", name="createdAt", required, type="hidden")
+          .form-group
+            label(for="name") Nome:
+            input.form-control(type="text", id="name", name="name", required)
+          .form-group
+            label(for="email") Email:
+            input.form-control(type="email", id="email", name="email", required)
+          .form-group
+            label(for="password") Senha:
+            input.form-control(type="password", id="password", name="password", required)
+          .form-group
+            label(for="cpf") CPF:
+            input.form-control(type="text", id="cpf", name="cpf", required)
+          .form-group
+            label(for="phone") Celular:
+            input.form-control(type="text", id="phone", name="phone", required)
+          .form-group
+            label(for="zipCode") CEP:
+            input.form-control(type="text", id="zipCode", name="zipCode", required)
+          .form-group
+            label(for="city") Cidade:
+            input.form-control(type="text", id="city", name="city", required)
+          .form-group
+            label(for="road") Rua:
+            input.form-control(type="text", id="road", name="road", required)
+          .form-group
+            label(for="numberHouse") Número da Casa:
+            input.form-control(type="text", id="numberHouse", name="numberHouse", required)
+          .form-group
+            label(for="neighborhood") Bairro:
+            input.form-control(type="text", id="neighborhood", name="neighborhood", required)
+          .form-group
+            label(for="office") Cargo:
+            select.form-control(id="officeSelect")
+              option(value=0)
+              option(value='Engenheiro') Engenheiro
+              option(value='Fiscal') Fiscal
+              option(value='Laborista') Laborista
+              option(value='Topógrafo') Topógrafo
+          .form-group
+            label(for="categoryRulesInput") Nível de acesso:
+            select.form-control(id="categoryRulesInput")
+              option(value=0)
+              option(value=1) Visualizar somente as informações do usuário
+              option(value=2) Visualizar todas as informações das funcionalidades
+              option(value=3) Visualizar, editar e excluir as informações das funcionalidades
+              option(value=4) Visualizar, editar e excluir relatórios finais
+          .form-check.form-check-flat.form-check-primary
+              label.form-check-label(for="admin") Administrador
+                input.form-check-input(type="checkbox", id="admin", name="admin", checked)
+          .form-group
+            input.btn.btn-primary.me-2(type="submit", value="Salvar")
+            label(id="errorMessage", style="display: none; color: red;")
+
+    #informationModal.modal
+      .modal-content
+        h4.card-title Informação:
+          label(id="message", style="display: none; color: red;")
+          label(id="messageP", style="display: none; color: green;")
+        button.btn.btn-light(onclick="reload()") Fechar
+
+    #deleteModal.modal
+      .modal-content
+        h4.card-title Confirmar Exclusão
+          .form-group
+              label() Tem certeza de que deseja excluir esse usuário?
+              input.form-control(id="idDelete", name="idDelete", readonly, type="hidden")
+          .form-group
+              input.form-control(type="text", id="nameDelete", name="nameDelete", readonly)
+          .form-group
+            button.btn.btn-danger.btn-rounded.btn-fw.deleteBtn(onclick='deleteModalRequest()') Excluir
+            button.btn.btn-light(onclick='closeModalDelete()') Cancelar
+            label(id="errorMessageDelete", style="display: none; color: red;")
+
+    script(src="./javascript/user.js")

@@ -1,0 +1,86 @@
+extends ./layout/master
+
+block head
+  title Relatório
+  script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+  script(src="https://unpkg.com/vanilla-masker@1.1.1/lib/vanilla-masker.js")
+
+  link(rel='stylesheet' href='/vendors/ti-icons/css/themify-icons.css')
+  link(rel='stylesheet' href='/vendors/css/vendor.bundle.base.css')
+  link(rel='stylesheet' href='/vendors/codemirror/codemirror.css')
+  link(rel='stylesheet' href='/vendors/codemirror/ambiance.css')
+  link(rel='stylesheet' href='/vendors/pwstabs/jquery.pwstabs.min.css')
+  link(rel='stylesheet' href='/css/vertical-layout-light/style.css')
+
+block content
+    .row(id= 'divToPrint')
+      .col-lg-16.grid-margin.stretch-card
+        .card
+          .card-body
+            .d-sm-flex.justify-content-between.align-items-start
+              h3.mb-4 Construção
+              div.btn.btn-otline-dark(onclick="print_specific_div_content()")
+                i.icon-printer
+                |  Print
+            if construction
+              .d-sm-flex.justify-content-between.align-items-start
+                .div
+                  p
+                    | Aqui você pode visualizar as informações do relatório:
+                  hr
+                  h5.mb-4=`🚧 Construção: ${construction.name}`
+                  h5.mb-4=`👤 Engenheiro responsável: ${construction.engineer ? construction.engineer.name : ''}`
+                  h5.mb-4=`📆 Data de cadastro: ${construction.createdAt.toLocaleString('pt-Br').split(',')[0]}`
+                  h5.mb-4=`📆 Data de inicio: ${construction.startDate.toLocaleString('pt-Br').split(',')[0]}`
+                  h5.mb-4=`📆 Data para término: ${construction.endDate.toLocaleString('pt-Br').split(',')[0]}`
+                  h5.mb-4=`📆 Data da finalização: ${construction.finishedAt ? construction.finishedAt.toLocaleString('pt-Br').split(',')[0]: '-'}`
+                  h5.mb-4=`⚙️ Companhia responsável: ${construction.company.name}`
+                  h5.mb-4=`🔸 Status: ${construction.status === 'active' ? 'Ativa' : construction.status === 'canceled' ? 'Cancelada' : construction.status === 'finished' ? 'Finalizada' : 'Suspensa'}`
+                .div
+                  .row.flex-grow
+                    .col-12.grid-margin.stretch-card
+                      .card.card-rounded
+                        .card-body
+                          .row
+                            .col-lg-12
+                              .d-flex.justify-content-between.align-items-center.mb-3
+                                div
+                                  h4.card-title.card-title-dash Alocações
+                              .mt-3
+                                each allocation in construction.allocations
+                                  .wrapper.d-flex.align-items-center.justify-content-between.py-2.border-bottom
+                                    .d-flex
+                                      img.img-sm.rounded-10(src='https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=826&t=st=1712232624~exp=1712233224~hmac=437a0204a02ca48e9c5b5d354bb3dffd681405da23d9d31d29783eb75219a09f', alt='profile')
+                                      .wrapper.ms-3
+                                        p.ms-1.mb-1.fw-bold= allocation.user.name
+                                        small.text-muted.mb-0= allocation.user.office
+              hr 
+
+              .card-body
+                .d-sm-flex.justify-content-between.align-items-start(style="flex-direction: column; flex-wrap: wrap;")
+                  h4.mb-4=`Essa construção possui ${construction.reports.length} relatórios`
+                  if construction.reports.length
+                    each report in construction.reports
+                      p
+                        | Aqui você pode visualizar as informações do relatório:
+                      br
+                      h5.mb-4=`👨‍🔧 Colaborador: ${report.user.name} - ${report.user.office}`
+                      h5.mb-4=`📆 Data da criação do relatório: ${report.createdAt.toLocaleString('pt-Br').split(',')[0]}`
+                      h5.mb-4=`🔸 Validado: ${report.isValided ? 'Sim' : 'Não'}`
+                      .pws_none.pws_tabs_container.pws_tabs_horizontal.pws_tabs_horizontal_top.pws_tabs_noeffect
+                        ul.pws_tabs_controll
+                          li
+                            a.pws_tab_active(data-tab-id='vertical light') Descrição:
+                        .demo-tabs.pws_tabs_list
+                          .pws_hide.pws_tab_single.pws_show(data-pws-tab='vertical light' data-pws-tab-name='Vertical light' data-pws-tab-id='1' style='')
+                            p.mb-5=report.description
+                      hr
+
+
+              .alert.alert-success.mt-4.d-flex.align-items-center(role='alert')
+                i.ti-info-alt
+                p
+                  | Construção são exclusivas da empresa SUG. Sua divulgação incorreta pode levar a decisões errôneas, problemas de conformidade e vazamento de informações sensíveis, afetando a saúde financeira e a reputação da organização.
+            else
+              p
+                | Construção indisponível

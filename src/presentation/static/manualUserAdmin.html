@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual de Ajuda - SUG</title>
+  <style>
+    /* Reset de estilos */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    nav ul {
+      list-style-type: none;
+      display: flex;
+      justify-content: center;
+      background-color: #444;
+      padding: 0.5rem;
+    }
+
+    nav ul li {
+      margin-right: 1rem;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+    }
+
+    nav ul li a:hover {
+      background-color: #555;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    section {
+      margin-bottom: 2rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #333;
+      color: #fff;
+    }
+
+    /* Estilos adicionais para o bloco de exemplo */
+    .example-block {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .example-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .example-code {
+      background-color: #f4f4f4;
+      padding: 0.5rem;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Manual de Ajuda - SUG</h1>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#construcao">Construção</a></li>
+      <li><a href="#alocacao">Alocação</a></li>
+      <li><a href="#agendamento">Agendamento</a></li>
+      <li><a href="#relatorios">Relatórios</a></li>
+      <li><a href="#usuarios">Usuários</a></li>
+      <li><a href="#empresas">Empresas</a></li>
+      <li><a href="#logout">Logout</a></li>
+    </ul>
+  </nav>
+  <main>
+    <section id="home">
+      <h2>Home</h2>
+      <p>No dashboard principal, você pode ver quantos relatórios estão pendentes para serem feitos.</p>
+    </section>
+    <section id="construcao">
+      <h2>Construção</h2>
+      <p>Aqui você pode visualizar e gerenciar informações relacionadas à construção.</p>
+      <p>Botões disponíveis: Visualizar Informações, Adicionar, Editar, Excluir.</p>
+        <div class="example-block">
+          <h3 class="example-title">Exemplo de como adicionar uma nova construção:</h3>
+          <div class="example-code">
+            <p>Passos:</p>
+            <ol>
+              <li>Clique no botão "Gerenciar construções" no Menu.</li>
+              <li>Clique no botão "Adicionar".</li>
+              <li>Preencha corretamente as informações no formulário abaixo.</li>
+              <li>Clique em "Salvar" para criar a alocação para um colaborador.</li>
+            </ol>
+          </div>
+        </div>
+        <div>
+          <img style="width: 870px" src='./adicionar_construcao.gif'>
+        </div>
+
+      <div class="example-block">
+        <h3 class="example-title">Exemplo de como editar uma construção:</h3>
+        <div class="example-code">
+          <p>Passos:</p>
+          <ol>
+            <li>Clique no botão "Gerenciar construções" no Menu.</li>
+            <li>Visualize as informações que estão no momento para cada construção e ao final da linha estará o botão de
+              Editar se estiver disponível para edição.</li>
+            <li>abrirá um modal com as informações atuais da construção para edição.</li>
+            <li>Clique em "Salvar" para salvar a edição.</li>
+          </ol>
+        </div>
+      </div>
+      <div>
+        <img style="width: 870px" src='./edicao_construcao.gif'>
+      </div>
+
+      <div class="example-block">
+        <h3 class="example-title">Exemplo de como excluir uma construção:</h3>
+        <div class="example-code">
+          <p>Passos:</p>
+          <ol>
+            <li>Clique no botão "Gerenciar construções" no Menu.</li>
+            <li>Visualize as informações que estão no momento para cada construção e ao final da linha estará o botão de
+              Excluir.</li>
+            <li>Abrirá um modal para confirmar a exclusão.</li>
+            <li>Clique em "Excluir" para excluir.</li>
+          </ol>
+        </div>
+      </div>
+      <div>
+        <img style="width: 870px" src='./exclusao_construcao.gif'>
+      </div>
+    </section>
+    <section id="alocacao">
+      <h2>Alocação</h2>
+      <p>Aqui você pode visualizar e gerenciar informações relacionadas à alocação.</p>
+      <div class="example-block">
+        <h3 class="example-title">Exemplo de como adicionar uma nova alocação:</h3>
+        <div class="example-code">
+          <p>Passos:</p>
+          <ol>
+            <li>Clique no botão "Gerenciar alocações" no Menu.</li>
+            <li>Clique no botão "Adicionar".</li>
+            <li>Preencha corretamente as informações no formulário abaixo.</li>
+            <li>Clique em "Salvar" para criar a alocação para um colaborador.</li>
+          </ol>
+        </div>
+      </div>
+      <div>
+        <img style="width: 870px" src='./adicionar_alocacao.gif'>
+      </div>
+
+      <div class="example-block">
+        <h3 class="example-title">Exemplo de como editar uma alocação:</h3>
+        <div class="example-code">
+          <p>Passos:</p>
+          <ol>
+            <li>Clique no botão "Gerenciar alocações" no Menu.</li>
+            <li>Visualize as informações que estão no momento para cada alocação e ao final da linha estará o botão de
+              Editar se estiver disponível para edição.</li>
+            <li>abrirá um modal com as informações atuais da alocação para edição.</li>
+            <li>Clique em "Salvar" para salvar a edição.</li>
+          </ol>
+        </div>
+      </div>
+      <div>
+        <img style="width: 870px" src='./edicao_alocacao.gif'>
+      </div>
+
+      <div class="example-block">
+        <h3 class="example-title">Exemplo de como excluir uma alocação:</h3>
+        <div class="example-code">
+          <p>Passos:</p>
+          <ol>
+            <li>Clique no botão "Gerenciar alocações" no Menu.</li>
+            <li>Visualize as informações que estão no momento para cada alocação e ao final da linha estará o botão de
+              Excluir.</li>
+            <li>Abrirá um modal para confirmar a exclusão.</li>
+            <li>Clique em "Excluir" para excluir.</li>
+          </ol>
+        </div>
+      </div>
+      <div>
+        <img style="width: 870px" src='./exclusao_alocacao.gif'>
+      </div>
+    </section>
+    <section id="agendamento">
+      <h2>Agendamento</h2>
+      <p>Aqui você pode visualizar e gerenciar informações relacionadas ao agendamento.</p>
+      <p>Botões disponíveis: Visualizar Informações, Adicionar, Editar, Excluir.</p>
+    </section>
+
+    <div class="example-block">
+      <h3 class="example-title">Exemplo de como adicionar um agendamento:</h3>
+      <div class="example-code">
+        <p>Passos:</p>
+        <ol>
+          <li>Clique no botão "Gerenciar agendamento" no Menu.</li>
+          <li>Clique no botão "Adicionar".</li>
+          <li>Preencha corretamente as informações no formulário abaixo.</li>
+          <li>Clique em "Salvar" para criar um agendamento para um colaborador.</li>
+        </ol>
+      </div>
+    </div>
+    <div>
+      <img style="width: 870px" src='./adicionar_agendamento.gif'>
+    </div>
+
+    <div class="example-block">
+      <h3 class="example-title">Exemplo de como editar um agendamento:</h3>
+      <div class="example-code">
+        <p>Passos:</p>
+        <ol>
+          <li>Clique no botão "Gerenciar agendamento" no Menu.</li>
+          <li>Visualize as informações que estão no momento para cada agendamento e ao final da linha estará o botão de
+            Editar se estiver disponível para edição.</li>
+          <li>abrirá um modal com as informações atuais da agendamento para edição.</li>
+          <li>Clique em "Salvar" para salvar a edição.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div>
+      <img style="width: 870px" src='./edicao_agendamento.gif'>
+    </div>
+
+    <div class="example-block">
+      <h3 class="example-title">Exemplo de como excluir um agendamento:</h3>
+      <div class="example-code">
+        <p>Passos:</p>
+        <ol>
+          <li>Clique no botão "Gerenciar agendamento" no Menu.</li>
+          <li>Visualize as informações que estão no momento para cada agendamento e ao final da linha estará o botão de
+            Excluir.</li>
+          <li>Abrirá um modal para confirmar a exclusão.</li>
+          <li>Clique em "Excluir" para excluir.</li>
+        </ol>
+      </div>
+    </div>
+    <div>
+      <img style="width: 870px" src='./exclusao_agendamento.gif'>
+    </div>
+    <section id="relatorios">
+      <h2>Relatórios</h2>
+      <p>Aqui você pode visualizar e gerenciar informações relacionadas aos relatórios.</p>
+      <p>Botões disponíveis: Visualizar Informações, Adicionar, Editar, Excluir.</p>
+      <div class="example-block">
+        <h3 class="example-title">Exemplo de como adicionar um novo relatório:</h3>
+        <div class="example-code">
+            <p>Passos:</p>
+            <ol>
+                <li>Clique no botão "Entregar relatório" ou "Entregar relatório final" no Menu.</li>
+                <li>Se for possível criar um relatório nesse momento irá aparecer os campos para preencher e carregar relatórios para acompanhar, sendo necessário no relatório mensal validar os outros relatórios para a construção.</li>
+                <li>Preencha corretamente as informações no formulário abaixo.</li>
+                <li>Clique em "Salvar" para criar um relatório.</li>
+            </ol>
+        </div>
+    </div>
+    <div>
+      <img style="width: 870px" src='./adicionar_relatorio.gif'>
+    </div>
+
+    <div class="example-block">
+      <h3 class="example-title">Exemplo de como editar um relatório:</h3>
+      <div class="example-code">
+          <p>Passos:</p>
+          <ol>
+              <li>Clique no botão "Gerenciar relatórios" no Menu.</li>
+              <li>Visualize as informações que estão no momento para cada relatório e ao final da linha estará o botão de Editar se estiver disponível para edição.</li>
+              <li>abrirá um modal com as informações atuais da relatório para edição.</li>
+              <li>Clique em "Salvar" para salvar a edição.</li>
+          </ol>
+      </div>
+  </div>
+  <div>
+    <img style="width: 870px" src='./edicao_relatorio.gif'>
+  </div>
+
+  <div class="example-block">
+    <h3 class="example-title">Exemplo de como excluir um relatório:</h3>
+    <div class="example-code">
+        <p>Passos:</p>
+        <ol>
+          <li>Clique no botão "Gerenciar relatórios" no Menu.</li>
+          <li>Visualize as informações que estão no momento para cada relatório e ao final da linha estará o botão de Excluir.</li>
+          <li>Abrirá um modal para confirmar a exclusão.</li>
+          <li>Clique em "Excluir" para excluir.</li>
+        </ol>
+    </div>
+</div>
+<div>
+  <img style="width: 870px" src='./exclusao_relatorio.gif'>
+</div>
+    </section>
+    <section id="usuarios">
+      <h2>Usuários</h2>
+      <p>Aqui você pode visualizar e gerenciar informações relacionadas aos usuários.</p>
+      <p>Botões disponíveis: Visualizar Informações, Adicionar, Editar, Excluir.</p>
+    </section>
+    <div class="example-block">
+      <h3 class="example-title">Exemplo de como adicionar uma usuário:</h3>
+      <div class="example-code">
+        <p>Passos:</p>
+        <ol>
+          <li>Clique no botão "Gerenciar usuários" no Menu.</li>
+          <li>Clique no botão "Adicionar".</li>
+          <li>Preencha corretamente as informações no formulário abaixo.</li>
+          <li>Clique em "Salvar" para criar um usuário.</li>
+        </ol>
+      </div>
+    </div>
+    <div>
+      <img style="width: 870px" src='./adicionar_usuario.gif'>
+    </div>
+
+    <div class="example-block">
+      <h3 class="example-title">Exemplo de como editar uma usuário:</h3>
+      <div class="example-code">
+        <p>Passos:</p>
+        <ol>
+          <li>Clique no botão "Gerenciar usuários" no Menu.</li>
+          <li>Visualize as informações que estão no momento para cada usuário e ao final da linha estará o botão de
+            Editar se estiver disponível para edição.</li>
+          <li>abrirá um modal com as informações atuais da usuário para edição.</li>
+          <li>Clique em "Salvar" para salvar a edição.</li>
+        </ol>
+      </div>
+    </div>
+    <div>
+      <img style="width: 870px" src='./edicao_usuario.gif'>
+    </div>
+
+    <div class="example-block">
+      <h3 class="example-title">Exemplo de como excluir uma usuário:</h3>
+      <div class="example-code">
+        <p>Passos:</p>
+        <ol>
+          <li>Clique no botão "Gerenciar usuários" no Menu.</li>
+          <li>Visualize as informações que estão no momento para cada usuário e ao final da linha estará o botão de
+            Excluir.</li>
+          <li>Abrirá um modal para confirmar a exclusão.</li>
+          <li>Clique em "Excluir" para excluir.</li>
+        </ol>
+      </div>
+    </div>
+    <div>
+      <img style="width: 870px" src='./exclusao_usuario.gif'>
+    </div>
+    <section id="empresas">
+      <h2>Empresas</h2>
+      <p>Aqui você pode visualizar e gerenciar informações relacionadas às empresas.</p>
+      <p>Botões disponíveis: Visualizar Informações, Adicionar, Editar, Excluir.</p>
+      <div class="example-block">
+        <h3 class="example-title">Exemplo de como adicionar uma nova empresa:</h3>
+        <div class="example-code">
+            <p>Passos:</p>
+            <ol>
+                <li>Clique no botão "Gerenciar empresas" no Menu.</li>
+                <li>Clique no botão "Adicionar".</li>
+                <li>Preencha corretamente as informações no formulário abaixo.</li>
+                <li>Clique em "Salvar" para criar a empresa.</li>
+            </ol>
+        </div>
+    </div>
+    <div>
+      <img style="width: 870px" src='./adicionar_companhia.gif'>
+    </div>
+
+    <div class="example-block">
+      <h3 class="example-title">Exemplo de como editar uma empresa:</h3>
+      <div class="example-code">
+          <p>Passos:</p>
+          <ol>
+              <li>Clique no botão "Gerenciar empresas" no Menu.</li>
+              <li>Visualize as informações que estão no momento para cada empresa e ao final da linha estará o botão de Editar se estiver disponível para edição.</li>
+              <li>abrirá um modal com as informações atuais da empresa para edição.</li>
+              <li>Clique em "Salvar" para salvar a edição.</li>
+          </ol>
+      </div>
+  </div>
+  <div>
+    <img style="width: 870px" src='./edicao_companhia.gif'>
+  </div>
+
+  <div class="example-block">
+    <h3 class="example-title">Exemplo de como excluir uma empresa:</h3>
+    <div class="example-code">
+        <p>Passos:</p>
+        <ol>
+          <li>Clique no botão "Gerenciar empresas" no Menu.</li>
+          <li>Visualize as informações que estão no momento para cada empresa e ao final da linha estará o botão de Excluir.</li>
+          <li>Abrirá um modal para confirmar a exclusão.</li>
+          <li>Clique em "Excluir" para excluir.</li>
+        </ol>
+    </div>
+</div>
+<div>
+  <img style="width: 870px" src='./exclusao_companhia.gif'>
+</div>
+    </section>
+    <section id="logout">
+      <h2>Logout</h2>
+      <p>No menu, ao lado da sua foto, há um botão de logout para sair do sistema.</p>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 SUG</p>

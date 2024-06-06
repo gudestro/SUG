@@ -1,0 +1,121 @@
+extends ./layout/master
+
+block head
+  title Gerenciar Agendamentos
+  link(rel="stylesheet", href="./styles/schedule.css")
+  script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+  script(src="https://unpkg.com/vanilla-masker@1.1.1/lib/vanilla-masker.js")
+
+block content
+  .row(id= 'divToPrint')
+    .col-lg-16.grid-margin.stretch-card
+      .card
+        .card-body
+          .d-sm-flex.justify-content-between.align-items-start
+            h4.card-title Agendamentos
+              p.card-description
+                | Aqui você pode ver os agendamentos
+            if canPrint === true
+              div.btn.btn-otline-dark(onclick="print_specific_div_content()")
+                i.icon-printer
+                |  Print
+            if canEdit === true 
+              button.btn.btn-primary.btn-lg.btn-block( onclick="openModal()") Adicionar
+
+          .table-responsive
+            table.table(id="table")
+              thead
+                tr
+                  th ID
+                  th Data da criação
+                  th Nome do colaborador
+                  th Nome da construção
+                  th Observação
+                  th Data da alocação
+                  th Data do agendamento
+                  th Status
+                  if canEdit === true
+                    th Editar
+                    th Excluir
+              tbody
+                each schedule in schedules
+                  tr
+                    td= schedule.id
+                    td= schedule.createdAt.toLocaleString('pt-Br').split(',')[0]
+                    td= schedule.user.name
+                    td= schedule.construction.name
+                    td= schedule.description
+                    td= schedule.allocation.createdAt.toLocaleString('pt-Br').split(',')[0]
+                    td= schedule.dateSchedule.toLocaleString('pt-Br').split(',')[0]
+                    td
+                      if schedule.status === 'active' 
+                        label.badge.badge-danger Ativa
+                      else
+                        label.badge.badge-info Finalizada
+                    if canEdit === true
+                      td
+                        if schedule.status === 'active' 
+                          button.btn.btn-warning.btn-rounded.btn-fw(onclick=`openModal(${JSON.stringify(schedule)})` data-id=schedule.id ) Editar
+                      td 
+                        button.btn.btn-danger.btn-rounded.btn-fw(onclick=`openModalDelete({ id: ${schedule.id}, name: '👤 ${schedule.user.name}    📆 ${schedule.dateSchedule.toLocaleString('pt-Br').split(',')[0]}', name2: '🚧 ${schedule.construction.name}'})` data-id=schedule.id) Excluir
+
+    #editModal.modal
+      .modal-content
+        h4.card-title Agendamento
+        form(id="editUserForm")
+          input(type="hidden", id="id", name="id")
+          input(type="hidden", id="constructionId", name="constructionSelect")
+          input(type="hidden", id="createdAt", name="createdAt")
+
+          .form-group
+            label(for="usersSelect") Colaborador:
+            select.form-control(onclick="completeSelect()" id="usersSelect")
+              option(value=0)
+              for user in users
+                option(value=user.id)= user.name
+
+          .form-group
+            label(for="allocationSelect") Data da Alocação - Construção:
+            select.form-control(onclick="completeAllocation()" id="allocationSelect")
+              option(value=0)
+
+          .form-group
+            label(for="dateSchedule") Data do agendamento:
+            input.form-control(type="Date", id="dateSchedule", name="dateSchedule", required)
+
+          .form-group
+            label(for="status") Status:
+            select.form-control(id="statusSelect")
+              option(value='active') Ativa
+
+          .form-group
+            label(for="description") Observação:
+            input.form-control(style="width: 100%" type="text", id="description", name="description", required)
+
+          .form-group
+            button.btn.btn-primary.me-2(type="button" onclick='requestModal()') Salvar
+            button.btn.btn-light(onclick='closeModal()') Cancelar
+            label(id="errorMessage", style="display: none; color: red;")
+
+    #deleteModal.modal
+      .modal-content
+        h4.card-title Confirmar Exclusão
+          .form-group
+              label() Tem certeza de que deseja excluir esse agendamento?
+              input.form-control(id="idDelete", name="idDelete", readonly, type="hidden")
+          .form-group
+              input.form-control(type="text", id="nameDelete", name="nameDelete", readonly)
+          .form-group
+              input.form-control(type="text", id="nameDelete2", name="nameDelete2", readonly)
+          .form-group
+            button.btn.btn-danger.btn-rounded.btn-fw.deleteBtn(onclick='deleteModalRequest()') Excluir
+            button.btn.btn-light(onclick='closeModalDelete()') Cancelar
+            label(id="errorMessageDelete", style="display: none; color: red;")
+
+    #informationModal.modal
+        .modal-content
+          label(id="message", style="display: none; color: red;")
+          label(id="messageP", style="display: none; color: green;")
+          button.btn.btn-light(onclick="reload()") Fechar
+
+    script(src="./javascript/schedule.js")

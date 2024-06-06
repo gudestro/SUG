@@ -1,0 +1,25 @@
+.c-header {
+  width: 9rem;
+}
+
+.logo {
+  width: 100%;
+  height: 100%;
+}
+
+.body {
+  margin: 0px;
+  padding: 0px;
+}
+
+.header {
+  width: 100%;
+  height: 6rem;
+  display: flex;
+  text-align: -webkit-center;
+  background-color: #7b8384;
+}
+
+a-header {
+  color: aliceblue;
+}

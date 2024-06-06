@@ -1,0 +1,60 @@
+main {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0; /* Cinza claro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+body {
+  background-color: #f0f0f0
+}
+
+.container {
+  background-color: #fff; /* Branco */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  text-align: center;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+input[type="email"],
+input[type="password"],
+button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc; /* Cinza claro */
+}
+
+button {
+  width: 108%;
+  background-color: #000; /* Preto */
+  color: #fff; /* Branco */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #333; /* Cinza escuro */
+}
+
+#errorMsg {
+  display: none;
+  color: red;
+  margin-top: 10px;
+}

@@ -1,0 +1,7 @@
+.env
+junit
+.husky
+coverage
+node_modules
+package-lock.json
+dist

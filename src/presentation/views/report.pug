@@ -1,0 +1,107 @@
+extends ./layout/master
+
+block head
+  title Relatórios
+  link(rel="stylesheet", href="./styles/report.css")
+  script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+  script(src="https://unpkg.com/vanilla-masker@1.1.1/lib/vanilla-masker.js")
+
+block content
+  .row
+    .col-lg-16.grid-margin.stretch-card
+      .card
+        .card-body
+          .d-sm-flex.justify-content-between.align-items-start
+            h4.card-title Relatórios
+              p.card-description
+                | Aqui você pode ver os relatórios
+            if canPrint === true
+            div.btn.btn-otline-dark(onclick="print_specific_div_content()")
+              i.icon-printer
+              |  Print
+          .table-responsive
+            table.table(id='table')
+              thead
+                tr
+                  th ID
+                  th Data da criação
+                  th Conteúdo
+                  th Nome do colaborador
+                  th Cargo do colaborador
+                  th Nome da construção
+                  th Data do agendamento
+                  th Está validado?
+                  th Veja completo
+                  if canEdit === true
+                    th Editar
+                    th Excluir
+              tbody
+                each report in reports
+                  tr
+                    td= report.id
+                    td= report.createdAt.toLocaleString('pt-Br').split(',')[0]
+                    td= report.description.substring(0, 50) + '...'
+                    td= report.user.name
+                    td= report.user.office
+                    td= report.construction.name
+                    td= report.schedule.dateSchedule ? report.schedule.dateSchedule.toLocaleString('pt-Br').split(',')[0] : ''
+                    td= report.isValided ? 'Sim' : 'Não'
+                    td
+                      a.btn.btn-outline-secondary.btn-rounded.btn-icon(href=`/relatorios/${report.id}` target="_blank")
+                        i.ti-stats-up.text-success
+                    if canEdit === true
+                      td
+                        if report.isValided !== true && report.userId === user.id
+                          button.btn.btn-warning.btn-rounded.btn-fw(onclick=`openModal(${JSON.stringify(report)})` data-id=report.id ) Editar
+                      td  
+                        button.btn.btn-danger.btn-rounded.btn-fw(onclick=`openModalDelete({ id: ${report.id}, name: '${report.construction.name}'})` data-id=report.id) Excluir
+
+    #editModal.modal
+      .modal-content
+        h4.card-title Relatório
+        form(id="editUserForm")
+          input(type="hidden", id="id", name="id")
+          input(type="hidden", id="userId", name="userId")
+          input(type="hidden", id="allocationId", name="allocationId")
+          input(type="hidden", id="constructionId", name="constructionId")
+          input(type="hidden", id="createdAt", name="createdAt")
+          input(type="hidden", id="scheduleId", name="scheduleId")
+
+          .form-group
+            label(for="userId") Usuario:
+            input.form-control(id="username" readonly)
+
+          .form-group
+            label(for="allocationSelect") Construção:
+            input.form-control(id="allocationSelect" readonly)
+
+          .form-group
+            label(for="description") Descrição:
+            textarea.form-control(style="height: 20rem;" type="text", id="description", name="description", required)
+
+          .form-group
+            button.btn.btn-primary.me-2n(type="button" onclick='requestModal()') Salvar
+            button.btn.btn-light(onclick='closeModal()') Cancelar
+            label(id="errorMessage", style="display: none; color: red;")
+
+    #deleteModal.modal
+      .modal-content
+        h4.card-title Confirmar Exclusão
+        h4.card-title Tem certeza de que deseja excluir esse relatório?
+          .form-group
+              input.form-control(type="text", id="idDelete", name="idDelete", readonly)
+          .form-group
+              input.form-control(type="text", id="nameDelete", name="nameDelete", readonly)
+          .form-group
+            button.btn.btn-danger.btn-rounded.btn-fw.deleteBtn(onclick='deleteModalRequest()') Excluir
+            button.btn.btn-light(onclick='closeModalDelete()') Cancelar
+            label(id="errorMessageDelete", style="display: none; color: red;")
+
+    #informationModal.modal
+      .modal-content
+        h4.card-title Informação:
+          label(id="message", style="display: none; color: red;")
+          label(id="messageP", style="display: none; color: green;")
+        button.btn.btn-light(onclick="reload()") Fechar
+
+    script(src="./javascript/report.js")

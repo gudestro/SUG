@@ -1,0 +1,67 @@
+extends ./layout/master
+
+block head
+  title Relatórios
+  link(rel="stylesheet", href="./styles/report.css")
+  script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+  script(src="https://unpkg.com/vanilla-masker@1.1.1/lib/vanilla-masker.js")
+
+block content
+  .row
+    .col-lg-16.grid-margin.stretch-card
+      .card
+        .card-body
+          h4.card-title Entregar relatório
+          if !allocation.length
+            p.card-description
+              | Você não possui nenhum relatórios pendentes
+          else
+            p.card-description
+              | Preencha as informações abaixo para entregar seu relatório
+              form.forms-sample
+                .form-group.row
+                  input(type="hidden", id="userId", name="userId" value= user.id)
+                  label.col-sm-3.col-form-label(for='userName') Nome
+                  .col-sm-9
+                    input.form-control(type='text' id="userName" value=user.name readonly)
+                .form-group.row
+                  label.col-sm-3.col-form-label(for='userName') Construção:
+                  .col-sm-9
+                      select.form-control(id="schedule" onclick="completeReports()")
+                        option(value=0)
+                        for s in allocation
+                          option(value=s.idConstruction)= s.nameButton
+                .form-group.row
+                  label.col-sm-3.col-form-label(for='userName') Relatórios dessa construção
+                  .col-sm-9
+                    .form-control(style="height: auto;")
+                      .table-responsive
+                        table.table(id="tableReports")
+                          thead
+                            tr
+                              th Conteúdo
+                              th Nome do colaborador
+                              th Cargo do colaborador
+                              th Copiar conteúdo
+                          tbody
+                          
+                .form-group.row
+                  label.col-sm-3.col-form-label(for='description') Descrição - (Min: 50 carac.):
+                  .col-sm-9
+                    textarea.form-control#description(style="height: 20rem;" type='text' placeholder='Descrição...' rows='14' cols='64' required)
+                .form-check.form-check-flat.form-check-primary
+                  label.form-check-label
+                    input.form-check-input(id="confirm" type='checkbox')
+                    | Confirma a conclusão da obra?
+                    i.input-helper
+                button.btn.btn-primary.me-2(type="button" onclick="saveReport()") Enviar
+                label(id="errorMessage", style="display: none; color: red;")
+        
+    #informationModal.modal
+      .modal-content
+        h4.card-title Informação:
+          label(id="message", style="display: none; color: red;")
+          label(id="messageP", style="display: none; color: green;")
+        button.btn.btn-light(onclick="reload()") Fechar
+  
+  script(src="./javascript/my-report-final.js")

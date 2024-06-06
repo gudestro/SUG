@@ -1,0 +1,127 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int               @id @default(autoincrement())
+  cpf          String            @unique
+  email        String            @unique
+  admin        Boolean           @default(false)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime?
+  city         String
+  road         String
+  phone        String
+  name         String
+  office       String
+  zipCode      String
+  password     String
+  numberHouse  String
+  neighborhood String
+  categoryRules Int    @default(1)
+  Report       Report[]
+  Schedules    Schedule[]
+  Allocation   Allocation[]
+  UserRules    PermissionsUser[]
+  Notification    Notification[]
+}
+
+model PermissionsUser {
+  id           Int        @id @default(autoincrement())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime?   
+  User         User       @relation(fields: [userId], references: [id])
+  Permission   Permission @relation(fields: [permissionId], references: [id])
+  permissionId Int
+  userId       Int
+}
+
+model Permission {
+  id              Int               @id @default(autoincrement())
+  description     String
+  PermissionsUser PermissionsUser[]
+}
+
+model Company {
+  id                       Int            @id @default(autoincrement())
+  createdAt                DateTime       @default(now())
+  updatedAt                DateTime?       
+  cnpj                     String         @unique
+  contact                  String
+  nameCompany              String
+  nameResponsiblePerson    String
+  contactResponsiblePerson String
+  Construction             Construction[]
+}
+
+model Construction {
+  id         Int          @id @default(autoincrement())
+  name       String
+  status     String
+  createdAt                DateTime       @default(now())
+  startDate                DateTime       @default(now())
+  endDate                DateTime       @default(now())
+  updatedAt                DateTime?    
+  finishedAt                DateTime?    
+  Company    Company      @relation(fields: [companyId], references: [id])
+  companyId  Int
+  Allocation Allocation[]
+  Schedule   Schedule[]
+  Report     Report[]
+}
+
+model Allocation {
+  id             Int          @id @default(autoincrement())
+  User           User         @relation(fields: [userId], references: [id])
+  Construction   Construction @relation(fields: [constructionId], references: [id])
+  userId         Int
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime?
+  constructionId Int
+  status String
+  Schedule       Schedule[]
+}
+
+model Schedule {
+  id             Int          @id @default(autoincrement())
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime?     
+  User           User         @relation(fields: [userId], references: [id])
+  Allocation     Allocation   @relation(fields: [allocationId], references: [id])
+  Construction   Construction @relation(fields: [constructionId], references: [id])
+  userId         Int
+  allocationId   Int
+  constructionId Int
+  status String
+  dateSchedule   DateTime
+  Report         Report[]
+  description String?
+}
+
+model Report {
+  id             Int          @id @default(autoincrement())
+  createdAt      DateTime     @default(now())
+  description    String
+  User           User         @relation(fields: [userId], references: [id])
+  Schedule       Schedule?     @relation(fields: [scheduleId], references: [id])
+  Construction   Construction @relation(fields: [constructionId], references: [id])
+  userId         Int
+  scheduleId     Int?
+  constructionId Int
+  isValided Boolean?
+  typeReport String?
+}
+
+
+model Notification {
+  id             Int          @id @default(autoincrement())
+  createdAt      DateTime     @default(now())
+  description    String
+  User           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         Int
+}

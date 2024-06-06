@@ -1,0 +1,118 @@
+/* Estilos para o modal de edição */
+#editModal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro semi-transparente */
+  overflow: auto;
+}
+
+#deleteModal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro semi-transparente */
+  overflow: auto;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%; /* Largura do modal */
+  max-width: 500px; /* Largura máxima do modal */
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5); /* Sombra suave */
+}
+
+.closeModal {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.closeModal:hover,
+.closeModal:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Estilos para os inputs e labels */
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+select,
+input[type="text"],
+input[type="email"],
+input[type="checkbox"],
+input[type="password"],
+input[type="submit"] {
+  width: calc(100% - 40px); /* Largura do input menos o padding */
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc; /* Cinza claro */
+}
+
+input[type="submit"] {
+  width: 100%;
+  background-color: #007bff; /* Cor azul */
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3; /* Cor azul mais escura */
+}
+
+@media screen and (max-width: 600px) {
+  .modal-content {
+    width: 80%;
+  }
+}
+
+
+/* Estilos para a tabela */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+/* Estilos para os botões de editar e excluir */
+.editBtn, .deleteBtn {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.editBtn {
+  background-color: #007bff; /* Azul */
+  color: #fff;
+}
+
+.deleteBtn {
+  background-color: #dc3545; /* Vermelho */
+  color: #fff;
+}

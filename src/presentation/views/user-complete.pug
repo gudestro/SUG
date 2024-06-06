@@ -1,0 +1,68 @@
+extends ./layout/master
+
+block head
+  title Relatório
+  script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+  script(src="https://unpkg.com/vanilla-masker@1.1.1/lib/vanilla-masker.js")
+
+  link(rel='stylesheet' href='/vendors/ti-icons/css/themify-icons.css')
+  link(rel='stylesheet' href='/vendors/css/vendor.bundle.base.css')
+  link(rel='stylesheet' href='/vendors/codemirror/codemirror.css')
+  link(rel='stylesheet' href='/vendors/codemirror/ambiance.css')
+  link(rel='stylesheet' href='/vendors/pwstabs/jquery.pwstabs.min.css')
+  link(rel='stylesheet' href='/css/vertical-layout-light/style.css')
+
+block content
+    .row(id= 'divToPrint')
+      .col-lg-16.grid-margin.stretch-card
+        .card
+          .card-body
+            .d-sm-flex.justify-content-between.align-items-start
+              h3.mb-4 Usuário
+              div.btn.btn-otline-dark(onclick="print_specific_div_content()")
+                i.icon-printer
+                |  Print
+            if user
+              .d-sm-flex.justify-content-between.align-items-start
+                .div
+                  p
+                    | Aqui você pode visualizar as informações do usuário:
+                  hr
+                  h5.mb-4=`👤 Nome do usuário: ${user.name}`
+                  h5.mb-4=`📜 CPF: ${user.cpf}`
+                  h5.mb-4=`🪪 Cargo: ${user.office}`
+                  h5.mb-4=`📱 Contato: ${user.phone}`
+                  h5.mb-4=`📍 CEP: ${user.zipCode}`
+                  h5.mb-4=`📍 Cidade: ${user.city}`
+                  h5.mb-4=`📍 Endereço: ${user.road}, ` + user.numberHouse
+                  h5.mb-4=`📍 Bairro: ${user.neighborhood}`
+              hr 
+
+              .card-body
+                .d-sm-flex.justify-content-between.align-items-start(style="flex-direction: column; flex-wrap: wrap;")
+                  h4.mb-4=`Essa construção possui ${construction.reports.length} relatórios`
+                  if construction.reports.length
+                    each report in construction.reports
+                      p
+                        | Aqui você pode visualizar as informações do relatório:
+                      br
+                      h5.mb-4=`👨‍🔧 Colaborador: ${report.user.name} - ${report.user.office}`
+                      h5.mb-4=`📆 Data da criação do relatório: ${report.createdAt.toLocaleString('pt-Br').split(',')[0]}`
+                      h5.mb-4=`🔸 Validado: ${report.isValided ? 'Sim' : 'Não'}`
+                      .pws_none.pws_tabs_container.pws_tabs_horizontal.pws_tabs_horizontal_top.pws_tabs_noeffect
+                        ul.pws_tabs_controll
+                          li
+                            a.pws_tab_active(data-tab-id='vertical light') Descrição:
+                        .demo-tabs.pws_tabs_list
+                          .pws_hide.pws_tab_single.pws_show(data-pws-tab='vertical light' data-pws-tab-name='Vertical light' data-pws-tab-id='1' style='')
+                            p.mb-5=report.description
+                      hr
+
+
+              .alert.alert-success.mt-4.d-flex.align-items-center(role='alert')
+                i.ti-info-alt
+                p
+                  | Construção são exclusivas da empresa SUG. Sua divulgação incorreta pode levar a decisões errôneas, problemas de conformidade e vazamento de informações sensíveis, afetando a saúde financeira e a reputação da organização.
+            else
+              p
+                | Construção indisponível

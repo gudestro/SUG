@@ -1,0 +1,99 @@
+extends ./layout/master
+
+block head
+  title Gerenciar Companhias
+  link(rel="stylesheet", href="./styles/company.css")
+  script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+  script(src="https://unpkg.com/vanilla-masker@1.1.1/lib/vanilla-masker.js")
+
+block content
+  .row
+    .col-lg-16.grid-margin.stretch-card
+      .card
+        .card-body
+          h4.card-title Companhias
+          p.card-description
+            | Aqui você pode gerenciar as companhias 
+          button.btn.btn-primary.btn-lg.btn-block( onclick="openModal()") Adicionar
+
+          .table-responsive
+            table.table(id="table")
+              thead
+                tr
+                  th ID
+                  th Data da criação
+                  th CNPJ
+                  th Contato
+                  th Nome da companhia
+                  th Nome do responsável
+                  th Contato do responsável
+                  th Editar
+                  th Excluir
+              tbody
+                for company in companies
+                  tr
+                    td= company.id
+                    td= company.createdAt.toLocaleString('pt-Br').split(',')[0]
+                    td= company.cnpj
+                    td= company.contact
+                    td= company.nameCompany
+                    td= company.nameResponsiblePerson
+                    td= company.contactResponsiblePerson
+                    td
+                      button.btn.btn-warning.btn-rounded.btn-fw(onclick=`openModal(${JSON.stringify(company)})` data-id=company.id ) Editar
+                    td 
+                      button.btn.btn-danger.btn-rounded.btn-fw(onclick=`openModalDelete({id:${company.id}, name: '${company.nameCompany}'})` data-id=company.id) Excluir
+
+      #editModal.modal
+        .modal-content
+          h4.card-title Companhia
+          form(id="editUserForm")
+            input(type="hidden", id="id", name="id")
+            input(type="hidden", id="createdAt", name="createdAt")
+            .form-group
+              label(for="cnpj") CNPJ:
+              input.form-control(type="text", id="cnpj", name="cnpj", required)
+
+            .form-group
+              label(for="contact") Contato:
+              input.form-control(type="text", id="contact", name="contact", required)
+
+            .form-group
+              label(for="nameCompany") Nome da companhia:
+              input.form-control(type="text", id="nameCompany", name="nameCompany", required)
+
+            .form-group
+              label(for="nameResponsiblePerson") Nome do responsável:
+              input.form-control(type="text", id="nameResponsiblePerson", name="nameResponsiblePerson", required)
+
+            .form-group
+              label(for="contactResponsiblePerson") Contato do responsável:
+              input.form-control(type="text", id="contactResponsiblePerson", name="contactResponsiblePerson", required)
+
+            .form-group
+              button.btn.btn-primary.me-2(type="button" onclick='requestModal()') Salvar
+              button.btn.btn-light(onclick='closeModal()') Cancelar
+              label(id="errorMessage", style="display: none; color: red;")
+
+      #deleteModal.modal
+        .modal-content
+          h4.card-title Confirmar exclusão
+          h4.card-title Tem certeza de que deseja excluir essa companhia?
+            .form-group
+              input.form-control(type="text", id="idDelete", name="idDelete", readonly)
+            .form-group
+              input.form-control(type="text", id="nameDelete", name="nameDelete", readonly)
+
+            .form-group
+              button.btn.btn-danger.btn-rounded.btn-fw.deleteBtn(onclick='deleteModalRequest()') Excluir
+              button.btn.btn-light(onclick='closeModalDelete()') Cancelar
+              label(id="errorMessageDelete", style="display: none; color: red;")
+
+    #informationModal.modal
+      .modal-content
+        label(id="message", style="display: none; color: red;")
+        label(id="messageP", style="display: none; color: green;")
+        button.btn.btn-light(onclick="reload()") Fechar
+
+
+    script(src="./javascript/company.js")

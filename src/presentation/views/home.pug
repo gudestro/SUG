@@ -1,0 +1,99 @@
+extends ./layout/master
+
+block head
+  title Página Inicial
+
+block content
+  .row
+    .col-sm-12 
+      .home-tab
+        .tab-content.tab-content-basic
+          .tab-pane.fade.show.active
+            .row
+              .col-lg-8.d-flex.flex-column
+                .row.flex-grow
+                  .col-12.grid-margin.stretch-card
+                    .card.card-rounded
+                      .card-body
+                        .d-sm-flex.justify-content-between.align-items-start
+                          div
+                            h4.card-title.card-title-dash Relatórios pendentes
+                            p.card-subtitle.card-subtitle-dash= `Você tem ${schedules.length} relatórios para enviar.`
+
+                        .table-responsive.mt-1
+                          table.table.select-table
+                            thead
+                              tr
+                                th Construção
+                                th Agendamento
+                                th Status
+                            tbody
+                              for info of schedules
+                                tr
+                                  td
+                                    .d-flex
+                                      img(src='https://img.freepik.com/fotos-gratis/silhueta-de-construcao_1127-3246.jpg?w=1380&t=st=1712231694~exp=1712232294~hmac=53dfe570015dcdaedbe5b82d56a18d0ee8bcdd5a1e1edc91bc5ea0117571b087' alt='')
+                                      div
+                                        h6= info.nameConstruction
+                                        p= info.infoConstruction.toLocaleString('pt-Br').split(',')[0]
+                                  td
+                                    h6 Comparecer no dia
+                                    p= info.dateSchedule.toLocaleString('pt-Br').split(',')[0]
+                                  td
+                                    .badge.badge-opacity-warning Pendente
+              if user.office === 'Engenheiro'
+                .col-lg-8.d-flex.flex-column
+                  .row.flex-grow
+                    .col-12.grid-margin.stretch-card
+                      .card.card-rounded
+                        .card-body
+                          .d-sm-flex.justify-content-between.align-items-start
+                            div
+                              h4.card-title.card-title-dash Construções
+                              p.card-subtitle.card-subtitle-dash= `Tem ${constructionsIncomplete} construções em andamento.`
+                            div
+                              .dropdown
+                                select.btn.btn-secondary.dropdown-toggle.toggle-dark.btn-lg.mb-0.me-0(id='filterTable', onchange='filter()', data-bs-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                                  option.dropdown-item(value='all') Todos
+                                  option.dropdown-item(value='Concluída') Concluídos
+                                  option.dropdown-item(value='Em progresso') Em progresso
+                                  option.dropdown-item(value='Cancelada') Canceladas
+                                  option.dropdown-item(value='Suspenso') Suspensas
+                          .table-responsive.mt-1
+                            table.table.select-table(id='table')
+                              thead
+                                tr
+                                  th Construção
+                                  th Alocações
+                                  th Conclusões de relatório
+                                  th Status
+                              tbody
+                                for construction of constructions
+                                  tr
+                                    td
+                                      .d-flex
+                                        img(src='https://img.freepik.com/fotos-gratis/silhueta-de-construcao_1127-3246.jpg?w=1380&t=st=1712231694~exp=1712232294~hmac=53dfe570015dcdaedbe5b82d56a18d0ee8bcdd5a1e1edc91bc5ea0117571b087' alt='')
+                                        div
+                                          h6= construction.name
+                                          p= construction.startDate.toLocaleString('pt-Br').split(',')[0]
+                                    td
+                                      h6 Alocações ativas
+                                      p= construction.allocationActiveCount
+                                    td
+                                      div
+                                        .d-flex.justify-content-between.align-items-center.mb-1.max-width-progress-wrap
+                                          p.text-success= construction.schedulesCount !== 0 ? (construction.schedulesNotActiveCount / construction.allocationCount * 100).toFixed(2)  : '0'
+                                          p= `${construction.schedulesNotActiveCount}/${construction.allocationCount}`
+                                        .progress.progress-md
+                                          .progress-bar.bg-success(role='progressbar' style=`width: ${construction.allocationCount !== 0 ? (construction.schedulesNotActiveCount / construction.allocationCount * 100).toFixed(0)  : '0'}%` aria-valuenow='25' aria-valuemin='0' aria-valuemax='100')
+                                    td
+                                      if construction.status === 'active'
+                                        .badge.badge-opacity-warning Em progresso
+                                      else if construction.status === 'finished'
+                                        .badge.badge-opacity-success Concluída
+                                      else if construction.status === 'suspended'
+                                        .badge.badge-opacity-danger Suspenso
+                                      else
+                                        .badge.badge-opacity-danger Cancelada
+
+  script(src="./javascript/home.js")
